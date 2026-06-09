@@ -28,7 +28,7 @@ If a tool returns an error, inform the user politely."""
 # Compile the agent graph
 agent_executor = create_agent(
     llm, 
-    tools, 
+    tools=tools, 
     system_prompt=system_message 
 )
 
