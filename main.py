@@ -2,7 +2,7 @@ from langchain_ollama import ChatOllama
 # from langgraph.prebuilt import create_react_agent
 from langchain.agents import create_agent
 from langchain_core.messages import HumanMessage
-from tools import (
+from tools.tools import (
     get_res_users, 
     get_sales_orders, 
     get_partner_details, 
