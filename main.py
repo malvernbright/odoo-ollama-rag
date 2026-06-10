@@ -6,7 +6,8 @@ from tools.tools import (
     get_res_users, 
     get_sales_orders, 
     get_partner_details, 
-    get_products
+    get_products,
+    get_fleet
 )
 
 # ==========================================
@@ -16,9 +17,9 @@ from tools.tools import (
 llm = ChatOllama(model="qwen3.5:4b", temperature=0)
 
 # Register the Python functions as tools for the LLM
-tools = [get_res_users, get_sales_orders, get_partner_details, get_products]
+tools = [get_res_users, get_sales_orders, get_partner_details, get_products, get_fleet]
 
-system_message = """You are the Odoo ERP Intelligent Assistant.
+system_message = """You are the Odoo 19 ERP Intelligent Assistant.
 You have access to real-time ERP data through your tools. 
 When a user asks for data, strictly use the appropriate tool to fetch it.
 Do not guess or hallucinate ERP data. 
@@ -37,7 +38,7 @@ agent_executor = create_agent(
 # ==========================================
 if __name__ == "__main__":
     print("==================================================")
-    print(" GONDO Agent Initialized (Odoo + LangGraph)")
+    print(" G.O.N.D.O Agent Initialized (Odoo + LangGraph)")
     print(" Type 'exit' or 'quit' to terminate.")
     print("==================================================\n")
     
@@ -45,7 +46,7 @@ if __name__ == "__main__":
         try:
             uq = input("User > ")
             if uq.lower() in ['exit', 'quit']:
-                print("Shutting down GONDO Assistant...")
+                print("Shutting down G.O.N.D.O Assistant...")
                 break
             
             if not uq.strip():
@@ -58,7 +59,7 @@ if __name__ == "__main__":
                 {"messages": [HumanMessage(content=uq)]}
             )
             
-            print("\n************* AfriERP *************")
+            print("\n************* G.O.N.D.O Assistant *************")
             # The final response from the LLM is the last message in the list
             print(response["messages"][-1].content)
             print("***********************************\n")

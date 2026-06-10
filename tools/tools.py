@@ -100,3 +100,30 @@ def get_products(search_term: str) -> str:
         return str(products)
     except Exception as e:
         return f"Error fetching products details: {str(e)}"
+
+@tool
+def get_fleet(search_term: str) -> str:
+    """
+    Searches for vehicles in a fleet.
+    Call this when the user asks for vehicle details,
+    vehicle model, tags, vehicle driver, future driver, assignment date, vehicle category, order date,
+    registration date, cancellation date, chasis number, last odometer reading, fleet manager, location,
+    horse power taxation, Deductibility Rates, e.t.c
+    """
+    try:
+        uid, models = get_odoo_models()
+        vehicles = models.execute_kw(ODOO_DB, uid, ODOO_PASSWORD,
+                                     'fleet.vehicle', 'search_read',
+                                     [[('display_name', 'ilike', search_term)]],
+                                     {
+                                         'fields': ['display_name', 'tag_ids', 
+                                                    'driver_id', 'future_driver_id', 
+                                                    'next_assignation_date', 'category_id'],
+                                          'limit': 30
+                                     }
+                    )
+        if not vehicles:
+            return f"No vehicles matching {search_term}"
+        return str(vehicles)
+    except Exception as e:
+        return f"Error fetching vehicles details: {str(e)}"
